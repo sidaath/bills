@@ -1,0 +1,141 @@
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, Card, RadioButton, TextInput } from 'react-native-paper';
+
+export default function AddNewBill() {
+
+    //user input
+    const [name, setName] = React.useState('')
+    const [billAmtType, setBillAmtType] = React.useState('')
+    const [billAmt, setBillAmt] = React.useState(0)
+    const [billFrequency, setBillFrequency] = React.useState('')
+
+    //error states
+    const [nameError, setNameError] = React.useState(false)
+    const [amtError, setAmtError] = React.useState(false)
+    const [amtTypeError, setAmtTypeError] = React.useState(false)
+    const [amtFrequencyError, setAmtFreqError] = React.useState(false)
+
+
+    function resetErrors(){
+        setNameError(false)
+        setAmtError(false)
+        setAmtTypeError(false)
+        setAmtFreqError(false)
+    }
+
+    function saveNewBill(){
+        const error = false
+        resetErrors()
+
+        //check if required data is given
+        if(name===''){
+            setNameError(true)
+            error ? true : true
+        }
+        if(billAmtType==='' || billFrequency===''){
+            setAmtTypeError(billAmtType==='')
+            setAmtFreqError(billFrequency==='')
+            error ? true : true
+        }
+        if(billAmtType==='fixedAmt' && billAmt===0){
+            setAmtError(true)
+            error ? true : true
+        }
+        if (error) return
+
+        //data check complete
+
+        //create object to save
+        const bill = {
+            name : name,
+            billAmountType : billAmtType,
+            amount : billAmtType==='fixedAmt'? billAmt : null,
+            frequency : billFrequency,
+        }
+
+        
+    }
+
+  
+
+    return (
+        <View>
+
+            <Card mode='outlined' style={nameError ? styles.cardError : null}>
+                <Card.Title title='Bill Type' />
+                <Card.Content>
+                    <TextInput
+                        mode='outlined'
+                        placeholder='STL, Mobitel-1, Electricity etc'
+                        error={nameError}
+                        value={name}
+                        onChangeText={text => setName(text)}
+                    />
+                </Card.Content>
+            </Card>
+
+
+            <Card mode='outlined' >
+                <Card.Title title='Payment Amount Type' style={amtTypeError? styles.cardError : null} />
+                <Card.Content>
+                    <RadioButton.Group onValueChange={newValue => {setBillAmtType(newValue)}} value={billAmtType}>
+                        <View>
+                            <Text>Fixed Amount </Text>
+                            <RadioButton value='fixedAmt' />
+                        </View>
+
+                        <View>
+                            <Text>Varying Amount </Text>
+                            <RadioButton value='notFixedAmt'/>
+                        </View>
+
+                    </RadioButton.Group>
+                </Card.Content>
+            </Card>
+
+            {billAmtType==='fixedAmt' && 
+            <Card>
+                <Card.Title title='Amount'/>
+                <Card.Content>
+                    <TextInput
+                        mode='outlined'
+                        label='amount'
+                        keyboardType='numeric'
+                        value={billAmt}
+                        error={amtError}
+                        onChangeText={(amt)=>{setBillAmt(amt)}}
+                    />
+                </Card.Content>
+            </Card>
+            }
+
+            <Card>
+                <Card.Title title='Payment Frequency Type'  style={amtFrequencyError ? styles.cardError : null}/>
+                <Card.Content>
+                <RadioButton.Group value={billFrequency} onValueChange={newValue=>{setBillFrequency(newValue)}}>
+                        <View>
+                            <Text>Monthly </Text>
+                            <RadioButton value='monthly' />
+                        </View>
+
+                        <View>
+                            <Text>Other </Text>
+                            <RadioButton value='other'/>
+                        </View>
+
+                    </RadioButton.Group>
+                </Card.Content>
+            </Card>
+
+
+            <Button onPress={()=>{saveNewBill()}}> Save </Button>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    cardError : {
+        backgroundColor : 'red'
+    }
+})
