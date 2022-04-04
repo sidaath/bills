@@ -2,21 +2,21 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Provider } from 'react-native-paper';
+import {  Provider } from 'react-native-paper';
 import AddNewBill from './Screens/AddBill/AddNewBill';
 import Home from './Screens/Home/Home';
 import UpdateHome from './Screens/MarkPayment/UpdateHome';
 import ReportHome from './Screens/Reports/ReportHome';
 
 
-
-
 class App extends React.Component {
 
-
   render() {
-    const Stack = createNativeStackNavigator();
 
+    
+
+    const Stack = createNativeStackNavigator();
+    //console.log("bills = ", this.state.bills
 
     return (
       <Provider>
@@ -31,6 +31,7 @@ class App extends React.Component {
       </Provider>
     )
   }
+
 }
 
 

@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, Card, RadioButton, TextInput } from 'react-native-paper';
+import {addBill} from '../../Model/BillModel.js'
 
-export default function AddNewBill() {
 
+export default function AddNewBill({route, navigation}) {
+    const {bills, reload} = route.params
+    console.log("in addnew bill, bills = ", bills )
+    console.log("in addnew bill, reload = ", reload )
     //user input
     const [name, setName] = React.useState('')
     const [billAmtType, setBillAmtType] = React.useState('')
-    const [billAmt, setBillAmt] = React.useState(0)
+    const [billAmt, setBillAmt] = React.useState('')
     const [billFrequency, setBillFrequency] = React.useState('')
 
     //error states
@@ -54,7 +58,9 @@ export default function AddNewBill() {
             frequency : billFrequency,
         }
 
-        
+        const addStatus = addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency)
+        if(addStatus) reload()
+        navigation.goBack()
     }
 
   
@@ -104,7 +110,7 @@ export default function AddNewBill() {
                         keyboardType='numeric'
                         value={billAmt}
                         error={amtError}
-                        onChangeText={(amt)=>{setBillAmt(amt)}}
+                        onChangeText={amt=>{setBillAmt(amt)}}
                     />
                 </Card.Content>
             </Card>
