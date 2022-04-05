@@ -1,6 +1,6 @@
 import React from 'react'
-import {View, ToastAndroid} from 'react-native'
-import { Button, Card, List, TextInput } from 'react-native-paper'
+import {View, ToastAndroid, ScrollView} from 'react-native'
+import { Button, Card, List, Menu, TextInput } from 'react-native-paper'
 import {months} from '../../Model/Months'
 import { makeMonthlyPayment, showPayments, removePayments } from '../../Model/Payment'
 
@@ -54,23 +54,35 @@ export default function MonthlyPayment({route, navigation}){
             makeMonthlyPayment(bill.name, monthYear, paymentAmount, paymentMethod)
         }
         
+        //for meny
+        const [visible, setVisible] = React.useState(false)
+        const selectMenuItem = (month)=>{
+            setMonth(month)
+            setVisible(false)
+        }
         return(
             <View>
             <Card>
                 <Card.Title title ={bill.name}/>
                 <Card.Content>
-                    <List.Section title='Pick Month'>
-                        <List.Accordion title={selectedMonth} expanded={expanded} onPress={()=>{setExpanded(!expanded)}}>
-                            {months.map((month)=>{
-                                return(
-                                    <List.Item key={month.name}
-                                        title={month.name}
-                                        onPress={()=>{selectMonth(month.name)}}
-                                    />
-                                )
-                            })}
-                        </List.Accordion>
-                    </List.Section>
+                    <Menu
+                        visible={visible}
+                        onDismiss={()=>{setVisible(false)}}
+                        anchor={
+                        <TextInput 
+                            mode='outlined' 
+                            value={selectedMonth}
+                            onFocus={()=>{setVisible(true)}}
+                            right={<TextInput.Icon name='tray-arrow-down' onPress={()=>{setVisible(true)}}/>}/>
+                        }
+                    >
+                    {months.map((month)=>{
+                        return(
+                            <Menu.Item key={month.name} title={month.name} onPress={()=>{selectMenuItem(month.name)}}/>
+                        )
+                    })}
+
+                    </Menu>
                 </Card.Content>
             </Card>
             <Card>
