@@ -60,6 +60,17 @@ export const showPayments = async (billName) => {
 
 }
 
+export const removePayments = async(billName) =>{
+    const key = `${billName}-payments`
+
+    try{
+        await AsyncStorage.removeItem(key)
+        console.log("Cleared Database of payments")
+    }catch(e){
+        console.log("Failed to clear payments ", e)
+    }
+}
+
 
 export const fetchPayments = async (billName)=>{
     const key = `${billName}-payments`
