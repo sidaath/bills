@@ -10,6 +10,7 @@ import OtherPayment from './Screens/MarkPayment/OtherPayment';
 import UpdateHome from './Screens/MarkPayment/UpdateHome';
 import BillReportMonthly from './Screens/Reports/BillReportMonthly';
 import BillReportOther from './Screens/Reports/BillReportOther';
+import RemoveRecord from './Screens/Reports/RemoveRecord';
 import ReportHome from './Screens/Reports/ReportHome';
 
 
@@ -34,6 +35,7 @@ class App extends React.Component {
             <Stack.Screen name="BillReportMonthly" component={BillReportMonthly} />
             <Stack.Screen name="OtherPayment" component={OtherPayment} />
             <Stack.Screen name="BillReportOther" component={BillReportOther} />
+            <Stack.Screen name="RemoveRecord" component={RemoveRecord} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

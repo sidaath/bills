@@ -19,6 +19,21 @@ class BillReportOther extends React.Component{
 
     render(){
         console.log("BillReportOther.js, render")
+        const {billName} = this.props.route.params
+        const setBillData = (billDataNew) =>{
+            this.setState({billData : billDataNew, dataLoaded : true})
+        }
+
+        const removeRecord = async (billInstance) =>{
+            this.setState({dataLoaded : false})
+            this.props.navigation.navigate('RemoveRecord', {
+                billInstance : billInstance,
+                setBillData : setBillData
+            })
+            await fetchPayments(billName).then((res)=>{
+                console.log("RES ", res)
+            })
+        }
 
         if (!this.state.dataLoaded) return (
             <View>
@@ -35,7 +50,7 @@ class BillReportOther extends React.Component{
                     </DataTable.Header>
                     {this.state.billData.map((billPaymentInstance)=>{
                         return(
-                            <DataTable.Row key={billPaymentInstance.paymentDate}>
+                            <DataTable.Row key={billPaymentInstance.paymentDate} onPress={()=>{removeRecord(billPaymentInstance)}}>
                                 <DataTable.Cell>{billPaymentInstance.paymentDate}</DataTable.Cell>
                                 <DataTable.Cell>{billPaymentInstance.payAmount}</DataTable.Cell>
                                 <DataTable.Cell>{billPaymentInstance.paymentMethod}</DataTable.Cell>

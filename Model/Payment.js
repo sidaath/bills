@@ -71,6 +71,26 @@ export const removePayments = async(billName) =>{
     }
 }
 
+export const removeRecord = async (record) => {
+    const key = `${record.billName}-payments`
+    try{
+        const currentRecordJSON = await AsyncStorage.getItem(key)
+        const currentRecord = JSON.parse(currentRecordJSON)
+        console.log("Fetched record = ", currentRecord)
+        const alteredRecord = currentRecord.filter((currentRecord)=>{
+            return currentRecord.paymentMonth !== record.paymentMonth
+        })
+
+        await AsyncStorage.setItem(key, JSON.stringify(alteredRecord))
+        ToastAndroid.show("Removed Record", ToastAndroid.SHORT)
+        console.log("Altered Record -> ", alteredRecord)
+        return alteredRecord
+    }catch(e){
+        console.log("Could not remove item ", e)
+        return false
+    }
+}
+
 
 export const fetchPayments = async (billName)=>{
     const key = `${billName}-payments`
