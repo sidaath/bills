@@ -79,6 +79,7 @@ export default function OtherPayment({ route, navigation }) {
                         mode='flat'
                         value={date.toLocaleDateString()}
                         label='Selected Date'
+                        onFocus={()=>{showDatepicker()}}
                     />
                     {show && <DateTimePicker 
                         testID='dateTimePicker'
