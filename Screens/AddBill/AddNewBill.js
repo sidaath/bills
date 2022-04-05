@@ -29,22 +29,22 @@ export default function AddNewBill({route, navigation}) {
     }
 
     function saveNewBill(){
-        const error = false
+        let error = false
         resetErrors()
 
         //check if required data is given
         if(name===''){
             setNameError(true)
-            error ? true : true
+            error = true
         }
         if(billAmtType==='' || billFrequency===''){
             setAmtTypeError(billAmtType==='')
             setAmtFreqError(billFrequency==='')
-            error ? true : true
+            error = true
         }
         if(billAmtType==='fixedAmt' && billAmt===0){
             setAmtError(true)
-            error ? true : true
+            error = true
         }
         if (error) return
 

@@ -9,13 +9,6 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.state = { dataLoaded: false}
-
-        // this.state ={ bills : readData()}
-
-        // const billsFromStorage = readData().then(()=>{
-        //     this.state = {bills : billsFromStorage}
-        //     this.setState({dataLoaded:true})
-        // })
     }
 
     async componentDidMount(){
@@ -77,7 +70,9 @@ class Home extends React.Component {
                     </Card.Content>
                 </Card>
 
-                <Card onPress={() => { this.props.navigation.navigate('UpdateHome') }}>
+                <Card onPress={() => { this.props.navigation.navigate('UpdateHome', {
+                    bills : this.state.bills
+                }) }}>
                     <Card.Title title="Mark Payment" />
                     <Card.Content>
 
