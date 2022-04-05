@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, ToastAndroid } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { ActivityIndicator, Button, Card, Headline, TextInput } from 'react-native-paper';
@@ -83,7 +83,7 @@ export default function BackupHome() {
         console.log(e)
       }
     })
-
+    ToastAndroid.show("Backup Complete", ToastAndroid.SHORT)
     setLoading(false)
   }
 
@@ -112,6 +112,10 @@ export default function BackupHome() {
               await restorePayments(payments, bill.name)
             })
         })
+      })
+      .catch((e)=>{
+        console.log(e)
+        ToastAndroid.show("Restore Failed. No documents available.", ToastAndroid.SHORT)
       })
     setLoading(false)
   }
