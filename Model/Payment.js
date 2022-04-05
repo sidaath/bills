@@ -82,7 +82,7 @@ export const removeRecord = async (record) => {
         const currentRecord = JSON.parse(currentRecordJSON)
         console.log("Fetched record = ", currentRecord)
         const alteredRecord = currentRecord.filter((currentRecord)=>{
-            return currentRecord.paymentMonth !== record.paymentMonth
+            return currentRecord.id !== record.id
         })
 
         await AsyncStorage.setItem(key, JSON.stringify(alteredRecord))
