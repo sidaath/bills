@@ -19,9 +19,31 @@ export const readData = async () => {
 
 export const addBill = async (name, billAmtType, amount, frequency) => {
 
-    const oldBillListJSON = await AsyncStorage.getItem('bills')
-    const oldBillList = JSON.parse(oldBillListJSON)
+    let oldBillList = []
+    try{
+        oldBillListJSON = await AsyncStorage.getItem('bills')
+        if(oldBillListJSON!==null){
+            oldBillList = JSON.parse(oldBillListJSON)
+        }
+    }catch(e){
+        console.log("Could not read oldBillList ",e)
+    }
+
     console.log("Model, L23 : oldBillList ", oldBillList)
+
+    let nameTaken = false
+    if(oldBillList.length !== 0){
+        nameTaken = oldBillList.some((bill)=>{
+            return bill.name===name
+        })
+    }
+    
+    if(nameTaken){
+        console.log("Name taken detected")
+        ToastAndroid.show(`${name} in use. Pick different name.`, ToastAndroid.SHORT)
+        return false
+    }
+
     const newBill = {
         name: name,
         billAmtType: billAmtType,
@@ -48,10 +70,10 @@ export const resetDB = async() =>{
         {name : "test-1", billAmtType : "notFixedAmt", amount:null, frequency:'monthly'},
         {name : "test-2", billAmtType : "notFixedAmt", amount:null, frequency:'other'},
      ]
+
     try{
-        await AsyncStorage.setItem('bills', JSON.stringify(x))
-    }
-    catch(e){
-        console.log("Failed to resetDB ",e)
+        AsyncStorage.removeItem('bills')
+    }catch(e){
+        console.log("Could not reset ",e)
     }
 }

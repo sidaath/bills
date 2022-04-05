@@ -75,14 +75,6 @@ export default function OtherPayment({ route, navigation }) {
             <Card>
                 <Card.Title title='Payment Details' />
                 <Card.Content>
-                    {/* <TextInput
-                        mode='outlined'
-                        value={date}
-                        placeholder="date of payment"
-                        label="Date"
-                        error={dateError}
-                        onChangeText={(text) => setDate(text)}
-                    /> */}
                     <TextInput 
                         mode='flat'
                         value={date.toLocaleDateString()}

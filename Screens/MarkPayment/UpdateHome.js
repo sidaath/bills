@@ -31,6 +31,9 @@ class UpdateHome extends React.Component{
                     return (
                         <Card key={bill.name} style={styles.item} onPress={()=>{makePayment(bill.frequency, bill)}} >
                             <Card.Title title={bill.name} subtitle={bill.frequency}/>
+                            {bill.amount !== null && <Card.Content>
+                                <Text>{bill.amount}</Text>
+                                </Card.Content>}
                         </Card>
                     )
                 })}

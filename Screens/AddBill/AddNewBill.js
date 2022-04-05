@@ -58,9 +58,14 @@ export default function AddNewBill({route, navigation}) {
             frequency : billFrequency,
         }
 
-        const addStatus = addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency)
-        if(addStatus) reload()
-        navigation.goBack()
+        addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency).then((res)=>{
+            if(res){
+                reload()
+            navigation.goBack()
+            }
+            else{return}
+        })
+        
     }
 
   
@@ -83,7 +88,7 @@ export default function AddNewBill({route, navigation}) {
 
 
             <Card mode='outlined' >
-                <Card.Title title='Payment Amount Type' style={amtTypeError? styles.cardError : null} />
+                <Card.Title title='Payment Type' subtitle='Fixed amount every time / no set amount' style={amtTypeError? styles.cardError : null} />
                 <Card.Content>
                     <RadioButton.Group onValueChange={newValue => {setBillAmtType(newValue)}} value={billAmtType}>
                         <View>
@@ -117,7 +122,7 @@ export default function AddNewBill({route, navigation}) {
             }
 
             <Card>
-                <Card.Title title='Payment Frequency Type'  style={amtFrequencyError ? styles.cardError : null}/>
+                <Card.Title title='Payment Frequency' subtitle='Monthly Payment / No fixed schedule' style={amtFrequencyError ? styles.cardError : null}/>
                 <Card.Content>
                 <RadioButton.Group value={billFrequency} onValueChange={newValue=>{setBillFrequency(newValue)}}>
                         <View>

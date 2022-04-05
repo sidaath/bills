@@ -11,7 +11,7 @@ export default function MonthlyPayment({route, navigation}){
         const [expanded, setExpanded] = React.useState(false)
         const [selectedMonth, setMonth] = React.useState('Pick Month')
 
-        const [paymentAmount, setAmount] = React.useState('')
+        const [paymentAmount, setAmount] = React.useState(bill.amount!==null? bill.amount : '')
         const [amtError, setAmtError] = React.useState(false)
 
         const [paymentMethod, setMethod] = React.useState('')
