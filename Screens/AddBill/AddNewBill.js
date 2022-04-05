@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet , ScrollView} from 'react-native';
 import { Button, Card, RadioButton, TextInput } from 'react-native-paper';
 import {addBill} from '../../Model/BillModel.js'
 
@@ -71,7 +71,7 @@ export default function AddNewBill({route, navigation}) {
   
 
     return (
-        <View>
+        <ScrollView>
 
             <Card mode='outlined' style={nameError ? styles.cardError : null}>
                 <Card.Title title='Bill Type' />
@@ -141,7 +141,7 @@ export default function AddNewBill({route, navigation}) {
 
 
             <Button onPress={()=>{saveNewBill()}}> Save </Button>
-        </View>
+        </ScrollView>
     )
 }
 

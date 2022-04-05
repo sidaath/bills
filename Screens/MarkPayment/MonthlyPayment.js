@@ -2,7 +2,7 @@ import React from 'react'
 import {View, ToastAndroid} from 'react-native'
 import { Button, Card, List, TextInput } from 'react-native-paper'
 import {months} from '../../Model/Months'
-import { makeMonthlyPayment, showPayments } from '../../Model/Payment'
+import { makeMonthlyPayment, showPayments, removePayments } from '../../Model/Payment'
 
 export default function MonthlyPayment({route, navigation}){
 
@@ -98,6 +98,8 @@ export default function MonthlyPayment({route, navigation}){
             <Button onPress={()=>{save()}}>Save</Button>
 
             <Button onPress={()=>{showPayments(bill.name)}}>Show payments</Button>
+
+            <Button onPress={()=>{removePayments(bill.name)}}>Remove payments</Button>
             </View>
         )
     }
