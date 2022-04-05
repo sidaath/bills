@@ -2,14 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ToastAndroid } from 'react-native'
 
 
-export const makePayment = async (bill, month, amount, method) => {
-    const payment = { billName: bill, paymentMonth: month, payAmount: amount, paymentMethod: method }
-    console.log("Payment.js payment : ", payment)
-    const key = `${bill}-payments`
-    console.log("saved key ", key)
+const makePayment = async (key, payment) => {
     const oldPaymentsJSON = await AsyncStorage.getItem(key)
-
-
     let newPayments = []
     if (oldPaymentsJSON !== null) {
         const oldPayments = JSON.parse(oldPaymentsJSON)
@@ -26,9 +20,29 @@ export const makePayment = async (bill, month, amount, method) => {
         console.log("Payment.js, Billpayment failed ", e)
         return false
     }
+}
+
+export const makeMonthlyPayment = async (bill, month, amount, method) => {
+    const payment = { billName: bill, paymentMonth: month, payAmount: amount, paymentMethod: method }
+    console.log("Payment.js payment : ", payment)
+    const key = `${bill}-payments`
+    console.log("saved key ", key)
+    
+    const res = await makePayment(key, payment)
+    return res
 
 }
 
+
+export const makeOtherPayment = async (bill, payDate, amount, method) =>{
+    const payment = {billName : bill, paymentDate : payDate, payAmount : amount, paymentMethod : method}
+    console.log("Payment.js makeOtherPayment, payment = ", payment)
+
+    const key = `${bill}-payments`
+
+    const res  = await makePayment(key, payment)
+    return res
+}
 
 export const showPayments = async (billName) => {
     const key = `${billName}-payments`

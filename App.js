@@ -6,8 +6,10 @@ import {  Provider } from 'react-native-paper';
 import AddNewBill from './Screens/AddBill/AddNewBill';
 import Home from './Screens/Home/Home';
 import MonthlyPayment from './Screens/MarkPayment/MonthlyPayment';
+import OtherPayment from './Screens/MarkPayment/OtherPayment';
 import UpdateHome from './Screens/MarkPayment/UpdateHome';
 import BillReportMonthly from './Screens/Reports/BillReportMonthly';
+import BillReportOther from './Screens/Reports/BillReportOther';
 import ReportHome from './Screens/Reports/ReportHome';
 
 
@@ -30,6 +32,8 @@ class App extends React.Component {
             <Stack.Screen name="UpdateHome" component={UpdateHome} />
             <Stack.Screen name="MonthlyPayment" component={MonthlyPayment} />
             <Stack.Screen name="BillReportMonthly" component={BillReportMonthly} />
+            <Stack.Screen name="OtherPayment" component={OtherPayment} />
+            <Stack.Screen name="BillReportOther" component={BillReportOther} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

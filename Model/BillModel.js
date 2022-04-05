@@ -44,7 +44,10 @@ export const addBill = async (name, billAmtType, amount, frequency) => {
 
 
 export const resetDB = async() =>{
-    const x = [{name : "name1", val : "value1"}, {name:"name2",val:"val2"}]
+    const x = [
+        {name : "test-1", billAmtType : "notFixedAmt", amount:null, frequency:'monthly'},
+        {name : "test-2", billAmtType : "notFixedAmt", amount:null, frequency:'other'},
+     ]
     try{
         await AsyncStorage.setItem('bills', JSON.stringify(x))
     }

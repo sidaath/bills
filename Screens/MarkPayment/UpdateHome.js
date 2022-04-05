@@ -9,9 +9,16 @@ class UpdateHome extends React.Component{
 
 
         const makePayment = (type, bill) =>{
+            console.log(type)
             if(type==='monthly'){
                 navigation.navigate('MonthlyPayment', {
                     bill : bill
+                })
+            }
+
+            if(type==='other'){
+                navigation.navigate('OtherPayment',{
+                    bill: bill
                 })
             }
         }
@@ -23,7 +30,7 @@ class UpdateHome extends React.Component{
                 {bills.map((bill)=>{
                     return (
                         <Card key={bill.name} style={styles.item} onPress={()=>{makePayment(bill.frequency, bill)}} >
-                            <Card.Title title={bill.name} />
+                            <Card.Title title={bill.name} subtitle={bill.frequency}/>
                         </Card>
                     )
                 })}
