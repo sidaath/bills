@@ -1,21 +1,54 @@
 import React from 'react'
-import {View} from 'react-native'
+import {View, ToastAndroid} from 'react-native'
 import { Button, Card, List, TextInput } from 'react-native-paper'
 import {months} from '../../Model/Months'
+import { makePayment, showPayments } from '../../Model/Payment'
 
 export default function MonthlyPayment({route, navigation}){
 
+        const {bill} = route.params
+        console.log("MopnthlyPayment.js, L10 bill : ", bill)
         const [expanded, setExpanded] = React.useState(false)
         const [selectedMonth, setMonth] = React.useState('Pick Month')
 
         const [paymentAmount, setAmount] = React.useState('')
-        const [paymentMethod, setMethod] = React.useState('')
         const [amtError, setAmtError] = React.useState(false)
+
+        const [paymentMethod, setMethod] = React.useState('')
+        const [methodError, setMethodError] = React.useState(false)
 
         const selectMonth = (month) =>{
             setExpanded(false)
             setMonth(month)
             console.log(month)
+        }
+
+        function resetErrors(){
+            setAmtError(false)
+            setMethodError(false)
+        }
+
+        const save = () =>{
+            resetErrors()
+            let error = false
+            
+            if(selectedMonth==='Pick Month'){
+                error = true
+                ToastAndroid.show('Pick Month of Payment', ToastAndroid.LONG)
+            }
+
+            if(paymentAmount===''){
+                error = true
+                setAmtError(true)
+            }
+            if(paymentMethod===''){
+                error = true
+                setMethodError(true)
+            }
+
+            if(error) return
+
+            makePayment(bill.name, selectedMonth, paymentAmount, paymentMethod)
         }
         
         return(
@@ -51,6 +84,7 @@ export default function MonthlyPayment({route, navigation}){
                         <TextInput 
                             mode='outlined'
                             value={paymentMethod}
+                            error={methodError}
                             label='Method'
                             placeholder='card, cash etc'
                             onChangeText={text=> setMethod(text)}
@@ -58,7 +92,9 @@ export default function MonthlyPayment({route, navigation}){
                     </Card.Content>
             </Card>
 
-            <Button>Save</Button>
+            <Button onPress={()=>{save()}}>Save</Button>
+
+            <Button onPress={()=>{showPayments(bill.name)}}>Show payments</Button>
             </View>
         )
     }

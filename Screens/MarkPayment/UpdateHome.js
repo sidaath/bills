@@ -8,9 +8,11 @@ class UpdateHome extends React.Component{
         console.log("UpdateHome.js, L8 bills : ", bills)
 
 
-        const makePayment = (type) =>{
+        const makePayment = (type, bill) =>{
             if(type==='monthly'){
-                navigation.navigate('MonthlyPayment')
+                navigation.navigate('MonthlyPayment', {
+                    bill : bill
+                })
             }
         }
 
@@ -20,7 +22,7 @@ class UpdateHome extends React.Component{
 
                 {bills.map((bill)=>{
                     return (
-                        <Card key={bill.name} style={styles.item} onPress={()=>{makePayment(bill.frequency)}} >
+                        <Card key={bill.name} style={styles.item} onPress={()=>{makePayment(bill.frequency, bill)}} >
                             <Card.Title title={bill.name} />
                         </Card>
                     )
