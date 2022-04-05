@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ToastAndroid } from 'react-native'
 import uuid from 'react-native-uuid';
 
-
+//save payment record to storage
 const makePayment = async (key, payment) => {
     const id = uuid.v4()
     payment = { ...payment, id: id }
@@ -25,6 +25,7 @@ const makePayment = async (key, payment) => {
     }
 }
 
+//process monthly type payment for storage
 export const makeMonthlyPayment = async (bill, month, amount, method) => {
     const payment = { billName: bill, paymentMonth: month, payAmount: amount, paymentMethod: method }
     const key = `${bill}-payments`
@@ -34,7 +35,7 @@ export const makeMonthlyPayment = async (bill, month, amount, method) => {
 
 }
 
-
+//process other type payment for storage
 export const makeOtherPayment = async (bill, payDate, amount, method) => {
     const payment = { billName: bill, paymentDate: payDate, payAmount: amount, paymentMethod: method }
 
@@ -44,6 +45,7 @@ export const makeOtherPayment = async (bill, payDate, amount, method) => {
     return res
 }
 
+//develop - log payment records
 export const showPayments = async (billName) => {
     const key = `${billName}-payments`
     try {
@@ -53,10 +55,12 @@ export const showPayments = async (billName) => {
         } else {
         }
     } catch (e) {
+        console.log("Payment.js, Line 58, ",e)
     }
 
 }
 
+//develop - clear payment records
 export const removePayments = async (billName) => {
     const key = `${billName}-payments`
 
@@ -66,6 +70,7 @@ export const removePayments = async (billName) => {
     }
 }
 
+//remove particular record for a particular service
 export const removeRecord = async (record) => {
     const key = `${record.billName}-payments`
     try {
@@ -83,7 +88,7 @@ export const removeRecord = async (record) => {
     }
 }
 
-
+//return list of payments
 export const fetchPayments = async (billName) => {
     const key = `${billName}-payments`
     let paymentArrayJSON = []

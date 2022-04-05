@@ -5,11 +5,11 @@ class UpdateHome extends React.Component {
     render() {
         const { route, navigation } = this.props
         const { bills } = route.params
-        console.log("UpdateHome.js, L8 bills : ", bills)
-
 
         const makePayment = (type, bill) => {
-            console.log(type)
+
+            //navigate to relavant payment recording page
+            
             if (type === 'monthly') {
                 navigation.navigate('MonthlyPayment', {
                     bill: bill

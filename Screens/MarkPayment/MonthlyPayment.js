@@ -7,10 +7,12 @@ import { makeMonthlyPayment, showPayments, removePayments } from '../../Model/Pa
 export default function MonthlyPayment({ route, navigation }) {
 
     const { bill } = route.params
-    console.log("MopnthlyPayment.js, L10 bill : ", bill)
+    
+    //month picker
     const [expanded, setExpanded] = React.useState(false)
     const [selectedMonth, setMonth] = React.useState('Pick Month')
 
+    //data input
     const [paymentAmount, setAmount] = React.useState(bill.amount !== null ? bill.amount : '')
     const [amtError, setAmtError] = React.useState(false)
 
@@ -54,12 +56,14 @@ export default function MonthlyPayment({ route, navigation }) {
         makeMonthlyPayment(bill.name, monthYear, paymentAmount, paymentMethod)
     }
 
-    //for meny
+    //for menu
     const [visible, setVisible] = React.useState(false)
     const selectMenuItem = (month) => {
         setMonth(month)
         setVisible(false)
     }
+
+    
     return (
         <View>
             <Card style={styles.card}>

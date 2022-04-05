@@ -26,6 +26,7 @@ class BillReportMonthly extends React.Component {
             this.setState({ billData: billDataNew, dataLoaded: true })
         }
 
+        //navigate to remove record page
         const removeRecord = async (billInstance) => {
             this.setState({ dataLoaded: false })
             this.props.navigation.navigate('RemoveRecord', {

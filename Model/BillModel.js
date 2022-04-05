@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 
 
+//read from storage - the list of bills (Mobitel-1, CEB, SLT-2 etc)
 export const readData = async () => {
     let billsData = []
     try {
@@ -16,6 +17,8 @@ export const readData = async () => {
     }
 }
 
+
+//return payment history for a particular service
 export const readPaymentRecords = async (billName) => {
     const key = `${billName}-payments`
     try {
@@ -31,6 +34,7 @@ export const readPaymentRecords = async (billName) => {
 }
 
 
+//add a bill (slt, ceb, mobitel-1 ...)
 export const addBill = async (name, billAmtType, amount, frequency) => {
 
     let oldBillList = []
@@ -74,7 +78,7 @@ export const addBill = async (name, billAmtType, amount, frequency) => {
 
 }
 
-
+//develop - reset local db
 export const resetDB = async () => {
     const x = [
         { name: "test-1", billAmtType: "notFixedAmt", amount: null, frequency: 'monthly' },
@@ -87,7 +91,7 @@ export const resetDB = async () => {
     }
 }
 
-
+//firebase - replace local bills db with firebase copy
 export const restoreBills = async (billsObj) => {
     const bills = billsObj.bills
 
@@ -95,10 +99,9 @@ export const restoreBills = async (billsObj) => {
     await AsyncStorage.setItem('bills', JSON.stringify(bills))
 }
 
+//firebase - replace local payment histories with firebase version
 export const restorePayments = async (paymentRecord, billName) => {
 
     const key = `${billName}-payments`
     await AsyncStorage.setItem(key, JSON.stringify(paymentRecord))
-
-    //await AsyncStorage.setItem('bills', JSON.stringify(bills))
 }

@@ -45,6 +45,7 @@ export default function OtherPayment({ route, navigation }) {
         }
         if (error) return
 
+        //call method from model
         makeOtherPayment(bill.name, date.toLocaleDateString(), amount, method)
     }
 

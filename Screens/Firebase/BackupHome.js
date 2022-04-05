@@ -57,8 +57,11 @@ export default function BackupHome() {
 
   const [loading, setLoading] = React.useState(false)
 
+  //backup
   const backupData = async () => {
     setLoading(true)
+
+    //backup services (slt, mobitel-1 etc)
     let bills = []
     try {
       bills = await readData()
@@ -71,6 +74,7 @@ export default function BackupHome() {
       console.log(e)
     }
 
+    //for each service, backup payment records
     bills.map(async (bill) => {
       try {
         const paymentRecord = await readPaymentRecords(bill.name)
@@ -87,8 +91,11 @@ export default function BackupHome() {
     setLoading(false)
   }
 
+  //restore
   const restoreData = async () => {
     setLoading(true)
+
+    //restore services (slt, mobitel1 etc)
     let bills = {}
     firestore()
       .collection(`${user.uid}`)
@@ -96,10 +103,13 @@ export default function BackupHome() {
       .get()
       .then(async (snapshot) => {
         bills = snapshot.data()
+
+        //call restroe method from model
         await restoreBills(snapshot.data())
 
         let billsArray = Array.from(bills.bills)
 
+        //restore payment records for all services
         billsArray.map((bill) => {
           firestore()
             .collection(`${user.uid}`)
@@ -108,7 +118,7 @@ export default function BackupHome() {
             .then(async (snapshotR) => {
 
               let payments = snapshotR.data().paymentRecord
-
+              //call restore method from model
               await restorePayments(payments, bill.name)
             })
         })

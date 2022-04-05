@@ -7,11 +7,12 @@ export default function RemoveRecord({ route, navigation }) {
 
     const { billInstance, setBillData } = route.params
 
+    //for dialog
     const [visible, setVisible] = React.useState(false)
     const showDialog = () => setVisible(true);
-
     const hideDialog = () => setVisible(false);
 
+    //remove record from payment history
     const removeBillRecord = async () => {
         result = await removeRecord(billInstance)
         if (result !== false) {

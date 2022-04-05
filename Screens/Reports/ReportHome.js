@@ -5,6 +5,7 @@ import { Card } from 'react-native-paper'
 export default function ReportHome({ route, navigation }) {
     const { bills } = route.params
 
+    //navigate to report page
     const showReport = (bill) => {
         console.log(bill)
         if (bill.frequency === 'monthly') {

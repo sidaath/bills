@@ -17,12 +17,12 @@ class BillReportOther extends React.Component{
     }
 
     render(){
-        console.log("BillReportOther.js, render")
         const {billName} = this.props.route.params
         const setBillData = (billDataNew) =>{
             this.setState({billData : billDataNew, dataLoaded : true})
         }
 
+        //navigate to remove record page
         const removeRecord = async (billInstance) =>{
             this.setState({dataLoaded : false})
             this.props.navigation.navigate('RemoveRecord', {

@@ -57,6 +57,7 @@ export default function AddNewBill({ route, navigation }) {
             frequency: billFrequency,
         }
 
+        //call save method from model
         addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency).then((res) => {
             if (res) {
                 reload()
