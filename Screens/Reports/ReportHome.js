@@ -7,10 +7,9 @@ export default function ReportHome({route, navigation}){
     console.log(bills)
     return(
         <ScrollView>
-            {bills.map((bill)=>{console.log(bill.name)})}
             {bills.map((bill)=>{
                 return(
-                    <Card key={bill.name}>
+                    <Card key={bill.name} onPress={()=>{navigation.navigate('BillReportMonthly', {billName : bill.name})}}>
                         <Card.Title  title={bill.name} />
                     </Card>
                 )

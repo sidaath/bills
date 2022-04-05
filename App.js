@@ -7,6 +7,7 @@ import AddNewBill from './Screens/AddBill/AddNewBill';
 import Home from './Screens/Home/Home';
 import MonthlyPayment from './Screens/MarkPayment/MonthlyPayment';
 import UpdateHome from './Screens/MarkPayment/UpdateHome';
+import BillReportMonthly from './Screens/Reports/BillReportMonthly';
 import ReportHome from './Screens/Reports/ReportHome';
 
 
@@ -28,6 +29,7 @@ class App extends React.Component {
             <Stack.Screen name="ReportHome" component={ReportHome} />
             <Stack.Screen name="UpdateHome" component={UpdateHome} />
             <Stack.Screen name="MonthlyPayment" component={MonthlyPayment} />
+            <Stack.Screen name="BillReportMonthly" component={BillReportMonthly} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
