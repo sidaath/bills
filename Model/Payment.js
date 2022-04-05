@@ -1,8 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ToastAndroid } from 'react-native'
+import uuid from 'react-native-uuid';
 
 
 const makePayment = async (key, payment) => {
+    const id = uuid.v4()
+    payment = {...payment, id : id}
+    console.log("Payment.js makePayment, payment : ",payment)
     const oldPaymentsJSON = await AsyncStorage.getItem(key)
     let newPayments = []
     if (oldPaymentsJSON !== null) {
