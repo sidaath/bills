@@ -16,6 +16,22 @@ export const readData = async () => {
     }
 }
 
+export const readPaymentRecords = async (billName) =>{
+    const key = `${billName}-payments`
+    console.log("BillModel key for reading payment records  ", key)
+    try {
+        const paymentsJSON = await AsyncStorage.getItem(key)
+        if (paymentsJSON !== null) {
+            return(JSON.parse(paymentsJSON))
+        } else {
+            return []
+        }
+    } catch (e) {
+        console.log("Payment.js, fail to read payments ", e)
+        return []
+    }
+}
+
 
 export const addBill = async (name, billAmtType, amount, frequency) => {
 
@@ -76,4 +92,21 @@ export const resetDB = async() =>{
     }catch(e){
         console.log("Could not reset ",e)
     }
+}
+
+
+export const restoreBills = async (billsObj) =>{
+    const bills = billsObj.bills
+    console.log("Restore from backup bills",bills)
+    console.log("Restore from backup bills", typeof(bills))
+
+    await AsyncStorage.setItem('bills', JSON.stringify(bills))
+}
+
+export const restorePayments = async (paymentRecord, billName) =>{
+    
+    const key = `${billName}-payments`
+    await AsyncStorage.setItem(key, JSON.stringify(paymentRecord))
+
+    //await AsyncStorage.setItem('bills', JSON.stringify(bills))
 }

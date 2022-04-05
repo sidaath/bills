@@ -79,6 +79,10 @@ class Home extends React.Component {
                     </Card.Content>
                 </Card>
 
+                <Card onPress={() => { this.props.navigation.navigate('BackupHome')}}>
+                    <Card.Title title='Cloud Backup' />
+                </Card>
+
                 <Button onPress={() => { console.log("aeae") }}>Ok</Button>
                 <Button onPress={readData2}>Tast</Button>
 

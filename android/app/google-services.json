@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "266835272290",
+    "project_id": "billtracker-c5629",
+    "storage_bucket": "billtracker-c5629.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266835272290:android:f104350c9861c99491e73b",
+        "android_client_info": {
+          "package_name": "com.billtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266835272290-1k4j2k2v7qafr290ebjr9r88v8jjcabe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLRzhipB3tKUraZkUwj1VoTxIVKQPAYSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266835272290-1k4j2k2v7qafr290ebjr9r88v8jjcabe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

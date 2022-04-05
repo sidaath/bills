@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import {  Provider } from 'react-native-paper';
 import AddNewBill from './Screens/AddBill/AddNewBill';
+import BackupHome from './Screens/Firebase/BackupHome';
 import Home from './Screens/Home/Home';
 import MonthlyPayment from './Screens/MarkPayment/MonthlyPayment';
 import OtherPayment from './Screens/MarkPayment/OtherPayment';
@@ -36,6 +37,7 @@ class App extends React.Component {
             <Stack.Screen name="OtherPayment" component={OtherPayment} />
             <Stack.Screen name="BillReportOther" component={BillReportOther} />
             <Stack.Screen name="RemoveRecord" component={RemoveRecord} />
+            <Stack.Screen name="BackupHome" component={BackupHome} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
