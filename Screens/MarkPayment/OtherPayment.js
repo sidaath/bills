@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, Card, TextInput } from 'react-native-paper'
-import { makeOtherPayment } from '../../Model/Payment'
+import { makeOtherPayment, removePayments } from '../../Model/Payment'
 
 export default function OtherPayment({ route, navigation }) {
 
@@ -110,6 +110,7 @@ export default function OtherPayment({ route, navigation }) {
             </Card>
 
             <Button onPress={() => { save() }}>Save</Button>
+            <Button onPress={()=>{removePayments(bill.name)}}>Remove payments</Button>
         </View>
     )
 }
