@@ -48,7 +48,10 @@ export default function MonthlyPayment({route, navigation}){
 
             if(error) return
 
-            makeMonthlyPayment(bill.name, selectedMonth, paymentAmount, paymentMethod)
+            const year = (new Date()).getFullYear()
+            const monthYear = `${year}/${selectedMonth}`
+
+            makeMonthlyPayment(bill.name, monthYear, paymentAmount, paymentMethod)
         }
         
         return(
