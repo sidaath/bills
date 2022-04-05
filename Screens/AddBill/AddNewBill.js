@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet , ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button, Card, RadioButton, TextInput } from 'react-native-paper';
-import {addBill} from '../../Model/BillModel.js'
+import { addBill } from '../../Model/BillModel.js'
 
 
-export default function AddNewBill({route, navigation}) {
-    const {bills, reload} = route.params
-    console.log("in addnew bill, bills = ", bills )
-    console.log("in addnew bill, reload = ", reload )
+export default function AddNewBill({ route, navigation }) {
+    const { bills, reload } = route.params
+
     //user input
     const [name, setName] = React.useState('')
     const [billAmtType, setBillAmtType] = React.useState('')
@@ -21,28 +20,28 @@ export default function AddNewBill({route, navigation}) {
     const [amtFrequencyError, setAmtFreqError] = React.useState(false)
 
 
-    function resetErrors(){
+    function resetErrors() {
         setNameError(false)
         setAmtError(false)
         setAmtTypeError(false)
         setAmtFreqError(false)
     }
 
-    function saveNewBill(){
+    function saveNewBill() {
         let error = false
         resetErrors()
 
         //check if required data is given
-        if(name===''){
+        if (name === '') {
             setNameError(true)
             error = true
         }
-        if(billAmtType==='' || billFrequency===''){
-            setAmtTypeError(billAmtType==='')
-            setAmtFreqError(billFrequency==='')
+        if (billAmtType === '' || billFrequency === '') {
+            setAmtTypeError(billAmtType === '')
+            setAmtFreqError(billFrequency === '')
             error = true
         }
-        if(billAmtType==='fixedAmt' && billAmt===0){
+        if (billAmtType === 'fixedAmt' && billAmt === 0) {
             setAmtError(true)
             error = true
         }
@@ -52,28 +51,28 @@ export default function AddNewBill({route, navigation}) {
 
         //create object to save
         const bill = {
-            name : name,
-            billAmountType : billAmtType,
-            amount : billAmtType==='fixedAmt'? billAmt : null,
-            frequency : billFrequency,
+            name: name,
+            billAmountType: billAmtType,
+            amount: billAmtType === 'fixedAmt' ? billAmt : null,
+            frequency: billFrequency,
         }
 
-        addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency).then((res)=>{
-            if(res){
+        addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency).then((res) => {
+            if (res) {
                 reload()
-            navigation.goBack()
+                navigation.goBack()
             }
-            else{return}
+            else { return }
         })
-        
+
     }
 
-  
+
 
     return (
         <ScrollView>
 
-            <Card mode='outlined' style={nameError ? styles.cardError : null}>
+            <Card mode='outlined' style={nameError ? styles.cardError : styles.card}>
                 <Card.Title title='Bill Type' />
                 <Card.Content>
                     <TextInput
@@ -87,10 +86,10 @@ export default function AddNewBill({route, navigation}) {
             </Card>
 
 
-            <Card mode='outlined' >
-                <Card.Title title='Payment Type' subtitle='Fixed amount every time / no set amount' style={amtTypeError? styles.cardError : null} />
+            <Card mode='outlined' style={styles.card}>
+                <Card.Title title='Payment Type' subtitle='Fixed amount every time / no set amount' style={amtTypeError ? styles.cardError : null} />
                 <Card.Content>
-                    <RadioButton.Group onValueChange={newValue => {setBillAmtType(newValue)}} value={billAmtType}>
+                    <RadioButton.Group onValueChange={newValue => { setBillAmtType(newValue) }} value={billAmtType}>
                         <View>
                             <Text>Fixed Amount </Text>
                             <RadioButton value='fixedAmt' />
@@ -98,33 +97,33 @@ export default function AddNewBill({route, navigation}) {
 
                         <View>
                             <Text>Varying Amount </Text>
-                            <RadioButton value='notFixedAmt'/>
+                            <RadioButton value='notFixedAmt' />
                         </View>
 
                     </RadioButton.Group>
                 </Card.Content>
             </Card>
 
-            {billAmtType==='fixedAmt' && 
-            <Card>
-                <Card.Title title='Amount'/>
-                <Card.Content>
-                    <TextInput
-                        mode='outlined'
-                        label='amount'
-                        keyboardType='numeric'
-                        value={billAmt}
-                        error={amtError}
-                        onChangeText={amt=>{setBillAmt(amt)}}
-                    />
-                </Card.Content>
-            </Card>
+            {billAmtType === 'fixedAmt' &&
+                <Card style={styles.card}>
+                    <Card.Title title='Amount' />
+                    <Card.Content>
+                        <TextInput
+                            mode='outlined'
+                            label='amount'
+                            keyboardType='numeric'
+                            value={billAmt}
+                            error={amtError}
+                            onChangeText={amt => { setBillAmt(amt) }}
+                        />
+                    </Card.Content>
+                </Card>
             }
 
-            <Card>
-                <Card.Title title='Payment Frequency' subtitle='Monthly Payment / No fixed schedule' style={amtFrequencyError ? styles.cardError : null}/>
+            <Card style={styles.card}>
+                <Card.Title title='Payment Frequency' subtitle='Monthly Payment / No fixed schedule' style={amtFrequencyError ? styles.cardError : null} />
                 <Card.Content>
-                <RadioButton.Group value={billFrequency} onValueChange={newValue=>{setBillFrequency(newValue)}}>
+                    <RadioButton.Group value={billFrequency} onValueChange={newValue => { setBillFrequency(newValue) }}>
                         <View>
                             <Text>Monthly </Text>
                             <RadioButton value='monthly' />
@@ -132,7 +131,7 @@ export default function AddNewBill({route, navigation}) {
 
                         <View>
                             <Text>Other </Text>
-                            <RadioButton value='other'/>
+                            <RadioButton value='other' />
                         </View>
 
                     </RadioButton.Group>
@@ -140,13 +139,18 @@ export default function AddNewBill({route, navigation}) {
             </Card>
 
 
-            <Button onPress={()=>{saveNewBill()}}> Save </Button>
+            <Button onPress={() => { saveNewBill() }}> Save </Button>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    cardError : {
-        backgroundColor : 'red'
+    cardError: {
+        backgroundColor: 'red'
+    },
+
+    card: {
+        margin: 5
     }
+
 })

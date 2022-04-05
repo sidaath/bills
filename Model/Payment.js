@@ -5,8 +5,8 @@ import uuid from 'react-native-uuid';
 
 const makePayment = async (key, payment) => {
     const id = uuid.v4()
-    payment = {...payment, id : id}
-    console.log("Payment.js makePayment, payment : ",payment)
+    payment = { ...payment, id: id }
+
     const oldPaymentsJSON = await AsyncStorage.getItem(key)
     let newPayments = []
     if (oldPaymentsJSON !== null) {
@@ -21,96 +21,81 @@ const makePayment = async (key, payment) => {
         ToastAndroid.show("Saved Bill payment", ToastAndroid.SHORT)
         return true
     } catch (e) {
-        console.log("Payment.js, Billpayment failed ", e)
         return false
     }
 }
 
 export const makeMonthlyPayment = async (bill, month, amount, method) => {
     const payment = { billName: bill, paymentMonth: month, payAmount: amount, paymentMethod: method }
-    console.log("Payment.js payment : ", payment)
     const key = `${bill}-payments`
-    console.log("saved key ", key)
-    
+
     const res = await makePayment(key, payment)
     return res
 
 }
 
 
-export const makeOtherPayment = async (bill, payDate, amount, method) =>{
-    const payment = {billName : bill, paymentDate : payDate, payAmount : amount, paymentMethod : method}
-    console.log("Payment.js makeOtherPayment, payment = ", payment)
+export const makeOtherPayment = async (bill, payDate, amount, method) => {
+    const payment = { billName: bill, paymentDate: payDate, payAmount: amount, paymentMethod: method }
 
     const key = `${bill}-payments`
 
-    const res  = await makePayment(key, payment)
+    const res = await makePayment(key, payment)
     return res
 }
 
 export const showPayments = async (billName) => {
     const key = `${billName}-payments`
-    console.log("reading key ", key)
     try {
         const paymentsJSON = await AsyncStorage.getItem(key)
         if (paymentsJSON !== null) {
             console.log(JSON.parse(paymentsJSON))
         } else {
-            console.log("Payment.hs ->  History empty")
         }
     } catch (e) {
-        console.log("Payment.js, fail to read payments ", e)
     }
 
 }
 
-export const removePayments = async(billName) =>{
+export const removePayments = async (billName) => {
     const key = `${billName}-payments`
 
-    try{
+    try {
         await AsyncStorage.removeItem(key)
-        console.log("Cleared Database of payments")
-    }catch(e){
-        console.log("Failed to clear payments ", e)
+    } catch (e) {
     }
 }
 
 export const removeRecord = async (record) => {
     const key = `${record.billName}-payments`
-    try{
+    try {
         const currentRecordJSON = await AsyncStorage.getItem(key)
         const currentRecord = JSON.parse(currentRecordJSON)
-        console.log("Fetched record = ", currentRecord)
-        const alteredRecord = currentRecord.filter((currentRecord)=>{
+        const alteredRecord = currentRecord.filter((currentRecord) => {
             return currentRecord.id !== record.id
         })
 
         await AsyncStorage.setItem(key, JSON.stringify(alteredRecord))
         ToastAndroid.show("Removed Record", ToastAndroid.SHORT)
-        console.log("Altered Record -> ", alteredRecord)
         return alteredRecord
-    }catch(e){
-        console.log("Could not remove item ", e)
+    } catch (e) {
         return false
     }
 }
 
 
-export const fetchPayments = async (billName)=>{
+export const fetchPayments = async (billName) => {
     const key = `${billName}-payments`
     let paymentArrayJSON = []
-
-    try{
+    try {
         paymentArrayJSON = await AsyncStorage.getItem(key)
-        if(paymentArrayJSON !==null){
+        if (paymentArrayJSON !== null) {
             const paymentArray = JSON.parse(paymentArrayJSON)
-            console.log(paymentArray)
             return paymentArray
-        }else{
+        } else {
             return []
         }
-    }catch(e){
-        console.log("Payment.js, failure reading payment data", e)
+    } catch (e) {
         return paymentArrayJSON
     }
 

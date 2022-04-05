@@ -1,10 +1,9 @@
 import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import { Card } from 'react-native-paper'
 
 export default function ReportHome({ route, navigation }) {
     const { bills } = route.params
-    console.log(bills)
 
     const showReport = (bill) => {
         console.log(bill)
@@ -20,7 +19,7 @@ export default function ReportHome({ route, navigation }) {
         <ScrollView>
             {bills.map((bill) => {
                 return (
-                    <Card key={bill.name} onPress={()=>{showReport(bill)}}>
+                    <Card key={bill.name} onPress={()=>{showReport(bill)}} style={styles.card}>
                         <Card.Title title={bill.name} />
                     </Card>
                 )
@@ -28,3 +27,9 @@ export default function ReportHome({ route, navigation }) {
         </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    card : {
+        margin : 5
+    }
+})

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, Card, TextInput } from 'react-native-paper'
 import { makeOtherPayment, removePayments } from '../../Model/Payment'
@@ -69,25 +69,25 @@ export default function OtherPayment({ route, navigation }) {
 
     return (
         <View>
-            <Card>
+            <Card style={styles.card}>
                 <Card.Title title={bill.name} />
             </Card>
-            <Card>
+            <Card style={styles.card}>
                 <Card.Title title='Payment Details' />
                 <Card.Content>
-                    <TextInput 
+                    <TextInput
                         mode='flat'
                         value={date.toLocaleDateString()}
                         label='Selected Date'
-                        onFocus={()=>{showDatepicker()}}
+                        onFocus={() => { showDatepicker() }}
                     />
-                    {show && <DateTimePicker 
+                    {show && <DateTimePicker
                         testID='dateTimePicker'
                         value={date}
                         mode='date'
                         onChange={onChange}
                     />}
-                    <Button onPress={()=>{showDatepicker()}}>Open Date Picker</Button>
+                    <Button onPress={() => { showDatepicker() }}>Open Date Picker</Button>
                     <TextInput
                         mode='outlined'
                         value={amount}
@@ -111,7 +111,13 @@ export default function OtherPayment({ route, navigation }) {
             </Card>
 
             <Button onPress={() => { save() }}>Save</Button>
-            <Button onPress={()=>{removePayments(bill.name)}}>Remove payments</Button>
+
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    card : {
+        margin : 5
+    }
+})

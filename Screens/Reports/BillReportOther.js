@@ -13,7 +13,6 @@ class BillReportOther extends React.Component{
     async componentDidMount(){
         const {billName} = this.props.route.params
         const billData = await fetchPayments(billName)
-        console.log("BillReportOther.js, didMount billData : ", billData)
         this.setState({billData : billData, dataLoaded : true})
     }
 
@@ -31,7 +30,6 @@ class BillReportOther extends React.Component{
                 setBillData : setBillData
             })
             await fetchPayments(billName).then((res)=>{
-                console.log("RES ", res)
             })
         }
 

@@ -1,118 +1,120 @@
 import React from 'react'
-import {View, ToastAndroid, ScrollView} from 'react-native'
-import { Button, Card, List, Menu, TextInput } from 'react-native-paper'
-import {months} from '../../Model/Months'
+import { View, ToastAndroid, StyleSheet } from 'react-native'
+import { Button, Card, Menu, TextInput } from 'react-native-paper'
+import { months } from '../../Model/Months'
 import { makeMonthlyPayment, showPayments, removePayments } from '../../Model/Payment'
 
-export default function MonthlyPayment({route, navigation}){
+export default function MonthlyPayment({ route, navigation }) {
 
-        const {bill} = route.params
-        console.log("MopnthlyPayment.js, L10 bill : ", bill)
-        const [expanded, setExpanded] = React.useState(false)
-        const [selectedMonth, setMonth] = React.useState('Pick Month')
+    const { bill } = route.params
+    console.log("MopnthlyPayment.js, L10 bill : ", bill)
+    const [expanded, setExpanded] = React.useState(false)
+    const [selectedMonth, setMonth] = React.useState('Pick Month')
 
-        const [paymentAmount, setAmount] = React.useState(bill.amount!==null? bill.amount : '')
-        const [amtError, setAmtError] = React.useState(false)
+    const [paymentAmount, setAmount] = React.useState(bill.amount !== null ? bill.amount : '')
+    const [amtError, setAmtError] = React.useState(false)
 
-        const [paymentMethod, setMethod] = React.useState('')
-        const [methodError, setMethodError] = React.useState(false)
+    const [paymentMethod, setMethod] = React.useState('')
+    const [methodError, setMethodError] = React.useState(false)
 
-        const selectMonth = (month) =>{
-            setExpanded(false)
-            setMonth(month)
-            console.log(month)
+    const selectMonth = (month) => {
+        setExpanded(false)
+        setMonth(month)
+        console.log(month)
+    }
+
+    function resetErrors() {
+        setAmtError(false)
+        setMethodError(false)
+    }
+
+    const save = () => {
+        resetErrors()
+        let error = false
+
+        if (selectedMonth === 'Pick Month') {
+            error = true
+            ToastAndroid.show('Pick Month of Payment', ToastAndroid.LONG)
         }
 
-        function resetErrors(){
-            setAmtError(false)
-            setMethodError(false)
+        if (paymentAmount === '') {
+            error = true
+            setAmtError(true)
+        }
+        if (paymentMethod === '') {
+            error = true
+            setMethodError(true)
         }
 
-        const save = () =>{
-            resetErrors()
-            let error = false
-            
-            if(selectedMonth==='Pick Month'){
-                error = true
-                ToastAndroid.show('Pick Month of Payment', ToastAndroid.LONG)
-            }
+        if (error) return
 
-            if(paymentAmount===''){
-                error = true
-                setAmtError(true)
-            }
-            if(paymentMethod===''){
-                error = true
-                setMethodError(true)
-            }
+        const year = (new Date()).getFullYear()
+        const monthYear = `${year}/${selectedMonth}`
 
-            if(error) return
+        makeMonthlyPayment(bill.name, monthYear, paymentAmount, paymentMethod)
+    }
 
-            const year = (new Date()).getFullYear()
-            const monthYear = `${year}/${selectedMonth}`
-
-            makeMonthlyPayment(bill.name, monthYear, paymentAmount, paymentMethod)
-        }
-        
-        //for meny
-        const [visible, setVisible] = React.useState(false)
-        const selectMenuItem = (month)=>{
-            setMonth(month)
-            setVisible(false)
-        }
-        return(
-            <View>
-            <Card>
-                <Card.Title title ={bill.name}/>
+    //for meny
+    const [visible, setVisible] = React.useState(false)
+    const selectMenuItem = (month) => {
+        setMonth(month)
+        setVisible(false)
+    }
+    return (
+        <View>
+            <Card style={styles.card}>
+                <Card.Title title={bill.name} />
                 <Card.Content>
                     <Menu
                         visible={visible}
-                        onDismiss={()=>{setVisible(false)}}
+                        onDismiss={() => { setVisible(false) }}
                         anchor={
-                        <TextInput 
-                            mode='outlined' 
-                            value={selectedMonth}
-                            onFocus={()=>{setVisible(true)}}
-                            right={<TextInput.Icon name='tray-arrow-down' onPress={()=>{setVisible(true)}}/>}/>
+                            <TextInput
+                                mode='outlined'
+                                value={selectedMonth}
+                                onFocus={() => { setVisible(true) }}
+                                right={<TextInput.Icon name='tray-arrow-down' onPress={() => { setVisible(true) }} />} />
                         }
                     >
-                    {months.map((month)=>{
-                        return(
-                            <Menu.Item key={month.name} title={month.name} onPress={()=>{selectMenuItem(month.name)}}/>
-                        )
-                    })}
+                        {months.map((month) => {
+                            return (
+                                <Menu.Item key={month.name} title={month.name} onPress={() => { selectMenuItem(month.name) }} />
+                            )
+                        })}
 
                     </Menu>
                 </Card.Content>
             </Card>
-            <Card>
-                <Card.Title title='Payment Details'/>
-                    <Card.Content>
-                        <TextInput 
-                            mode='outlined'
-                            label='Amount'
-                            keyboardType='numeric'
-                            error={amtError}
-                            value={paymentAmount}
-                            onChangeText={amt => setAmount(amt)}
-                            />
-                        <TextInput 
-                            mode='outlined'
-                            value={paymentMethod}
-                            error={methodError}
-                            label='Method'
-                            placeholder='card, cash etc'
-                            onChangeText={text=> setMethod(text)}
-                        />
-                    </Card.Content>
+            <Card style={styles.card}>
+                <Card.Title title='Payment Details' />
+                <Card.Content>
+                    <TextInput
+                        mode='outlined'
+                        label='Amount'
+                        keyboardType='numeric'
+                        error={amtError}
+                        value={paymentAmount}
+                        onChangeText={amt => setAmount(amt)}
+                    />
+                    <TextInput
+                        mode='outlined'
+                        value={paymentMethod}
+                        error={methodError}
+                        label='Method'
+                        placeholder='card, cash etc'
+                        onChangeText={text => setMethod(text)}
+                    />
+                </Card.Content>
             </Card>
 
-            <Button onPress={()=>{save()}}>Save</Button>
+            <Button onPress={() => { save() }}>Save</Button>
 
-            <Button onPress={()=>{showPayments(bill.name)}}>Show payments</Button>
+        </View>
+    )
+}
 
-            <Button onPress={()=>{removePayments(bill.name)}}>Remove payments</Button>
-            </View>
-        )
+const styles = StyleSheet.create({
+    card: {
+        margin: 3
     }
-
+})
