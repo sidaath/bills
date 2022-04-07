@@ -67,16 +67,16 @@ export const removeBill = async (billName) => {
     console.log("Remove name ", billName)
     try{
         const oldBills = await readData()
-        console.log("Old bills = ",oldBills)
         const newBills = oldBills.filter((bill)=> {return bill.name !== billName})
-        console.log("Nw Bills = ", newBills)
         await AsyncStorage.setItem('bills', JSON.stringify(newBills))
         const key = `${billName}-payments`
         await AsyncStorage.removeItem(key)
         ToastAndroid.show("Deleted Bill", ToastAndroid.SHORT)
+        return true
     }
     catch(e){
         console.log("Error deleting Bill ",e)
+        return false
     }
 }
 
