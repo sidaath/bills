@@ -50,6 +50,15 @@ class Home extends React.Component {
                     </Card.Content>
                 </Card>
 
+                <Card style={styles.card}
+                    onPress={() => {
+                        this.props.navigation.navigate('RemoveBill')
+                    }}>
+                    <Card.Title title="Remove Bill" />
+                    <Card.Content>
+                    </Card.Content>
+                </Card>
+
                 <Card style={styles.card} onPress={() => {
                     this.props.navigation.navigate('ReportHome', {
                         bills: this.state.bills

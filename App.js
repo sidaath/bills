@@ -9,6 +9,7 @@ import Home from './Screens/Home/Home';
 import MonthlyPayment from './Screens/MarkPayment/MonthlyPayment';
 import OtherPayment from './Screens/MarkPayment/OtherPayment';
 import UpdateHome from './Screens/MarkPayment/UpdateHome';
+import RemoveBill from './Screens/RemoveBill/RemoveBill';
 import BillReportMonthly from './Screens/Reports/BillReportMonthly';
 import BillReportOther from './Screens/Reports/BillReportOther';
 import RemoveRecord from './Screens/Reports/RemoveRecord';
@@ -38,6 +39,7 @@ class App extends React.Component {
             <Stack.Screen name="BillReportOther" component={BillReportOther} />
             <Stack.Screen name="RemoveRecord" component={RemoveRecord} />
             <Stack.Screen name="BackupHome" component={BackupHome} />
+            <Stack.Screen name="RemoveBill" component={RemoveBill} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

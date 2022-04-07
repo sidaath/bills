@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ToastAndroid } from 'react-native'
 import uuid from 'react-native-uuid';
+import { readData } from "./BillModel";
 
 //save payment record to storage
 const makePayment = async (key, payment) => {
@@ -88,7 +89,7 @@ export const removeRecord = async (record) => {
     }
 }
 
-//return list of payments
+//return list of payments - one service
 export const fetchPayments = async (billName) => {
     const key = `${billName}-payments`
     let paymentArrayJSON = []
@@ -104,6 +105,47 @@ export const fetchPayments = async (billName) => {
         return paymentArrayJSON
     }
 
+}
+
+//return number of records for payments of all services
+export const getRecordNumbers = async()=>{
+    const billNames = []
+    try{
+        const billData = await readData()
+        billData.forEach(element => {
+            billNames.push(element.name)
+        });
+        console.log("Bill names -<> ", billNames)
+    }
+    catch(e){
+        console.error("Payment.js, getRecordNumbers : FETCHING BILLS -> ",e)
+    }
+
+    const record = []
+    // billNames.forEach(async(billName)=>{
+    //     try{
+    //         const record = await fetchPayments(billName)
+    //         console.log(record)
+    //     }
+    //     catch(e){
+    //         console.log("For each catch -> ",e)
+    //     }
+    // })
+
+    for(let i = 0 ; i < billNames.length; i++){
+        console.log("in for loop")
+        try{
+        const paymentRecord = await fetchPayments(billNames[i])
+        record.push({billName : billNames[i], total:paymentRecord.length})
+        }
+        catch(e){
+            console.log("Erro in for loop -> ",e)
+        }
+    }
+
+    console.log("records ", record)
+    console.log("end")
+    return record
 }
 
 

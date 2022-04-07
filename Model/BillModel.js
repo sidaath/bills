@@ -18,22 +18,6 @@ export const readData = async () => {
 }
 
 
-//return payment history for a particular service
-export const readPaymentRecords = async (billName) => {
-    const key = `${billName}-payments`
-    try {
-        const paymentsJSON = await AsyncStorage.getItem(key)
-        if (paymentsJSON !== null) {
-            return (JSON.parse(paymentsJSON))
-        } else {
-            return []
-        }
-    } catch (e) {
-        return []
-    }
-}
-
-
 //add a bill (slt, ceb, mobitel-1 ...)
 export const addBill = async (name, billAmtType, amount, frequency) => {
 
@@ -76,6 +60,24 @@ export const addBill = async (name, billAmtType, amount, frequency) => {
         return false
     }
 
+}
+
+//remove service
+export const removeBill = async (billName) => {
+    console.log("Remove name ", billName)
+    try{
+        const oldBills = await readData()
+        console.log("Old bills = ",oldBills)
+        const newBills = oldBills.filter((bill)=> {return bill.name !== billName})
+        console.log("Nw Bills = ", newBills)
+        await AsyncStorage.setItem('bills', JSON.stringify(newBills))
+        const key = `${billName}-payments`
+        await AsyncStorage.removeItem(key)
+        ToastAndroid.show("Deleted Bill", ToastAndroid.SHORT)
+    }
+    catch(e){
+        console.log("Error deleting Bill ",e)
+    }
 }
 
 //develop - reset local db
