@@ -5,7 +5,6 @@ import { addBill } from '../../Model/BillModel.js'
 
 
 export default function AddNewBill({ route, navigation }) {
-    const { bills, reload } = route.params
 
     //user input
     const [name, setName] = React.useState('')
@@ -60,8 +59,9 @@ export default function AddNewBill({ route, navigation }) {
         //call save method from model
         addBill(bill.name, bill.billAmountType, bill.amount, bill.frequency).then((res) => {
             if (res) {
-                reload()
-                navigation.goBack()
+                navigation.navigate('Home', {
+                    reload : true
+                })
             }
             else { return }
         })

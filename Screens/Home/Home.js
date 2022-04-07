@@ -16,7 +16,7 @@ class Home extends React.Component {
         this.setState({ bills: data, dataLoaded: true })
     }
 
-    async componentDidUpdate() {
+    async componentDidUpdate(prevProps) {
         const data = await readData()
         this.state = { bills: data }
     }
@@ -42,7 +42,6 @@ class Home extends React.Component {
                     onPress={() => {
                         this.props.navigation.navigate('AddNewBill', {
                             bills: this.state.bills,
-                            reload: reload
                         })
                     }}>
                     <Card.Title title="Add Bill" />
@@ -52,9 +51,7 @@ class Home extends React.Component {
 
                 <Card style={styles.card}
                     onPress={() => {
-                        this.props.navigation.navigate('RemoveBill',{
-                            reload : reload
-                        })
+                        this.props.navigation.navigate('RemoveBill')
                     }}>
                     <Card.Title title="Remove Bill" />
                     <Card.Content>
