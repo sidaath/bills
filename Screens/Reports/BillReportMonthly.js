@@ -13,6 +13,7 @@ class BillReportMonthly extends React.Component {
     async componentDidMount() {
         const { billName } = this.props.route.params
         const billData = await fetchPayments(billName)
+        console.log("XXXXXXX", billData)
         this.setState({ billData: billData, dataLoaded: true })
     }
 
