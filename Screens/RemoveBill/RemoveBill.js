@@ -20,10 +20,15 @@ class RemoveBill extends React.Component{
     }
 
     render(){
+        const {reload} = this.props.route.params
 
         const handleDelete = async (billName)=>{
-            removeBill(billName)
-            this.props.navigation.navigate('Home')
+            removeBill(billName).then((res)=>{
+                if(res){
+                    reload()
+                    this.props.navigation.goBack()
+                }
+            })
         }
 
         if(!this.state.dataLoaded){

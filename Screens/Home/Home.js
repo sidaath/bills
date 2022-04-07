@@ -52,7 +52,9 @@ class Home extends React.Component {
 
                 <Card style={styles.card}
                     onPress={() => {
-                        this.props.navigation.navigate('RemoveBill')
+                        this.props.navigation.navigate('RemoveBill',{
+                            reload : reload
+                        })
                     }}>
                     <Card.Title title="Remove Bill" />
                     <Card.Content>
