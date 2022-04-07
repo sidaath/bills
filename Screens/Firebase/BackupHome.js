@@ -3,7 +3,8 @@ import { View, ToastAndroid } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { ActivityIndicator, Button, Card, Headline, TextInput } from 'react-native-paper';
-import { readData, readPaymentRecords, restoreBills, restorePayments } from '../../Model/BillModel';
+import { readData, restoreBills, restorePayments } from '../../Model/BillModel';
+import { fetchPayments } from '../../Model/Payment';
 
 export default function BackupHome() {
   // Set an initializing state whilst Firebase connects
@@ -77,7 +78,7 @@ export default function BackupHome() {
     //for each service, backup payment records
     bills.map(async (bill) => {
       try {
-        const paymentRecord = await readPaymentRecords(bill.name)
+        const paymentRecord = await fetchPayments(bill.name)
         const recordObj = { paymentRecord }
         firestore().collection(`${user.uid}`)
           .doc(`${bill.name}-payments`)
