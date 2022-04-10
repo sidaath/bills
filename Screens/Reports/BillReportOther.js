@@ -19,23 +19,28 @@ class BillReportOther extends React.Component{
         this.setState({billData : billData, dataLoaded : true})
     }
 
-    render(){
-        const {billName} = this.props.route.params
-
-        const setBillData = (billDataNew) =>{
-            this.setState({billData : billDataNew, dataLoaded : true})
+    componentDidUpdate(){
+        if(this.props.route.params?.reload === true){
+            this.props.route.params.reload = false
+            this.setState({billData : this.props.route.params.newRecords, dataLoaded : true})
+        }else{
+            if(this.state.dataLoaded === false){
+                this.setState({dataLoaded : true})
+            }
         }
+    }
+
+    render(){
+
 
         //navigate to remove record page
         const removeRecord = async (billInstance) =>{
             this.setState({dataLoaded : false})
             this.props.navigation.navigate('RemoveRecord', {
                 billInstance : billInstance,
-                setBillData : setBillData
+                parentScreen : this.props.route.name,
             })
-            await fetchPayments(billName).then((res)=>{
-                this.setState({billData : res, dataLoaded : true})
-            })
+
         }
 
         if (!this.state.dataLoaded) return (

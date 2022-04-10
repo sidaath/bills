@@ -16,30 +16,30 @@ class BillReportMonthly extends React.Component {
             title : `Payments : ${title}`
         })
         const billData = await fetchPayments(billName)
-        console.log("XXXXXXX", billData)
         this.setState({ billData: billData, dataLoaded: true })
     }
 
+    componentDidUpdate(){
+        if(this.props.route.params?.reload === true){
+            this.props.route.params.reload = false
+            this.setState({billData : this.props.route.params.newRecords, dataLoaded : true})
+        }else{
+            if(this.state.dataLoaded === false){
+                this.setState({dataLoaded : true})
+            }
+        }
+    }
 
 
     render() {
-        console.log("BillReportMonthly render, dataLoaded : ", this.state.dataLoaded)
-        const { billName } = this.props.route.params
-
-        const setBillData = (billDataNew) => {
-            this.setState({ billData: billDataNew, dataLoaded: true })
-        }
-
         //navigate to remove record page
         const removeRecord = async (billInstance) => {
             this.setState({ dataLoaded: false })
             this.props.navigation.navigate('RemoveRecord', {
                 billInstance: billInstance,
-                setBillData: setBillData
+                parentScreen : this.props.route.name,
             })
-            fetchPayments(billName).then((res) => {
-                this.setState({billData : res, dataLoaded : true})
-            })
+
         }
 
         if (!this.state.dataLoaded) return (

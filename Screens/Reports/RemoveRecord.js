@@ -4,8 +4,7 @@ import { Button, Card, Dialog, Headline, Paragraph, Portal } from 'react-native-
 import { removeRecord } from '../../Model/Payment'
 
 export default function RemoveRecord({ route, navigation }) {
-
-    const { billInstance, setBillData } = route.params
+    const { billInstance, parentScreen } = route.params
 
     //for dialog
     const [visible, setVisible] = React.useState(false)
@@ -16,10 +15,15 @@ export default function RemoveRecord({ route, navigation }) {
     const removeBillRecord = async () => {
         result = await removeRecord(billInstance)
         if (result !== false) {
-            setBillData(result)
+            setVisible(false)
+            navigation.navigate(parentScreen,{
+                reload : true,
+                newRecords : result
+            })
         }
-        setVisible(false)
-        navigation.goBack()
+        else{
+            setVisible(false)
+        }
     }
 
     return (
