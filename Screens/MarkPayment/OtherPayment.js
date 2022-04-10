@@ -8,6 +8,12 @@ export default function OtherPayment({ route, navigation }) {
 
     const { bill } = route.params
 
+    React.useLayoutEffect(()=>{
+        navigation.setOptions({
+            title : `Pay : ${bill.name}`
+        })
+    }, [navigation])
+
     const [date, setDate] = React.useState(new Date())
     const [mode, setMode] = React.useState('date');
     const [show, setShow] = React.useState(false);

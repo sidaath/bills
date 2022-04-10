@@ -49,7 +49,7 @@ class Home extends React.Component {
                             bills: this.state.bills,
                         })
                     }}>
-                    <Card.Title title="Add Bill" />
+                    <Card.Title title="Add Service" />
                     <Card.Content>
                     </Card.Content>
                 </Card>
@@ -58,7 +58,7 @@ class Home extends React.Component {
                     onPress={() => {
                         this.props.navigation.navigate('RemoveBill')
                     }}>
-                    <Card.Title title="Remove Bill" />
+                    <Card.Title title="Remove Service" />
                     <Card.Content>
                     </Card.Content>
                 </Card>
@@ -79,7 +79,7 @@ class Home extends React.Component {
                         bills: this.state.bills
                     })
                 }}>
-                    <Card.Title title="Mark Payment" />
+                    <Card.Title title="Payments" />
                     <Card.Content>
 
                     </Card.Content>

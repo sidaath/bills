@@ -30,16 +30,16 @@ class App extends React.Component {
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="AddNewBill" component={AddNewBill} />
-            <Stack.Screen name="ReportHome" component={ReportHome} />
-            <Stack.Screen name="UpdateHome" component={UpdateHome} />
+            <Stack.Screen name="AddNewBill" component={AddNewBill} options={{title : 'Add Service'}}/>
+            <Stack.Screen name="RemoveBill" component={RemoveBill} options={{title : 'Remove Service'}}/>
+            <Stack.Screen name="ReportHome" component={ReportHome} options={{title : 'Reports'}}/>
+            <Stack.Screen name="UpdateHome" component={UpdateHome} options={{title : 'Payments'}}/>
+            <Stack.Screen name="BackupHome" component={BackupHome} options={{title : 'Backup'}} />
             <Stack.Screen name="MonthlyPayment" component={MonthlyPayment} />
+            <Stack.Screen name="OtherPayment" component={OtherPayment}/>
             <Stack.Screen name="BillReportMonthly" component={BillReportMonthly} />
-            <Stack.Screen name="OtherPayment" component={OtherPayment} />
             <Stack.Screen name="BillReportOther" component={BillReportOther} />
-            <Stack.Screen name="RemoveRecord" component={RemoveRecord} />
-            <Stack.Screen name="BackupHome" component={BackupHome} />
-            <Stack.Screen name="RemoveBill" component={RemoveBill} />
+            <Stack.Screen name="RemoveRecord" component={RemoveRecord} options={{title : 'Remove Record'}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

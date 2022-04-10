@@ -7,6 +7,12 @@ import { makeMonthlyPayment, showPayments, removePayments } from '../../Model/Pa
 export default function MonthlyPayment({ route, navigation }) {
 
     const { bill } = route.params
+
+    React.useLayoutEffect(()=>{
+        navigation.setOptions({
+            title : `Pay : ${bill.name}`
+        })
+    }, [navigation])
     
     //month picker
     const [expanded, setExpanded] = React.useState(false)

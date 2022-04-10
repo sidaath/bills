@@ -17,7 +17,13 @@ class BillReportOther extends React.Component{
     }
 
     render(){
-        const {billName} = this.props.route.params
+        const {billName, title} = this.props.route.params
+
+        this.props.navigation.setOptions({
+            title : `Payments : ${title}`
+        })
+
+
         const setBillData = (billDataNew) =>{
             this.setState({billData : billDataNew, dataLoaded : true})
         }

@@ -10,10 +10,10 @@ export default function ReportHome({ route, navigation }) {
         console.log(bill)
         if (bill.frequency === 'monthly') {
             console.log("show monthly")
-            navigation.navigate('BillReportMonthly', {billName : bill.name})
+            navigation.navigate('BillReportMonthly', {billName : bill.name, title:bill.name})
         }
         if(bill.frequency==='other'){
-            navigation.navigate('BillReportOther', {billName : bill.name})
+            navigation.navigate('BillReportOther', {billName : bill.name, title:bill.name})
         }
     }
     return (
