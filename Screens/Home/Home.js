@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-native-paper';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { readData, resetDB } from '../../Model/BillModel.js'
+import { readData } from '../../Model/BillModel.js'
 
 
 
@@ -16,18 +16,23 @@ class Home extends React.Component {
         this.setState({ bills: data, dataLoaded: true })
     }
 
-    async componentDidUpdate(prevProps) {
-        const data = await readData()
-        this.state = { bills: data }
+    componentDidUpdate() {
+        console.log("Updating HOME")
+        if(this.props.route.params?.reload === true){
+            console.log("Reload Required for Home")
+            !this.state.dataLoaded && this.setState({dataLoaded : false})
+            this.props.route.params.reload = false
+            readData().then((res)=>{
+                this.setState({dataLoaded : true, bills : res})
+            })
+            .catch((e)=>{
+                console.log("Error reading data, HOME UPDATE ",e)
+                this.setState({dataLoaded : true, bills : []})
+            })
+        }
     }
 
     render() {
-        const reload = async () => {
-            this.setState({ dataLoaded: false })
-            const newData = await readData()
-            this.setState({ bills: newData, dataLoaded: true })
-        }
-
 
         if (!this.state.dataLoaded) return (
             <View>
