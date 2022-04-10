@@ -34,6 +34,7 @@ class BillReportOther extends React.Component{
                 setBillData : setBillData
             })
             await fetchPayments(billName).then((res)=>{
+                this.setState({billData : res, dataLoaded : true})
             })
         }
 

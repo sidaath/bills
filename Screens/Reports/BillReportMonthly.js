@@ -22,8 +22,8 @@ class BillReportMonthly extends React.Component {
 
 
 
-
     render() {
+        console.log("BillReportMonthly render, dataLoaded : ", this.state.dataLoaded)
         const { billName } = this.props.route.params
 
         const setBillData = (billDataNew) => {
@@ -37,7 +37,8 @@ class BillReportMonthly extends React.Component {
                 billInstance: billInstance,
                 setBillData: setBillData
             })
-            await fetchPayments(billName).then((res) => {
+            fetchPayments(billName).then((res) => {
+                this.setState({billData : res, dataLoaded : true})
             })
         }
 
