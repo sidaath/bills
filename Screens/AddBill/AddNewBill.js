@@ -74,7 +74,7 @@ export default function AddNewBill({ route, navigation }) {
         <ScrollView>
 
             <Card mode='outlined' style={nameError ? styles.cardError : styles.card}>
-                <Card.Title title='Bill Type' />
+                <Card.Title title='Service' />
                 <Card.Content>
                     <TextInput
                         mode='outlined'

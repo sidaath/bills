@@ -11,7 +11,10 @@ class BillReportMonthly extends React.Component {
     }
 
     async componentDidMount() {
-        const { billName } = this.props.route.params
+        const {billName, title} = this.props.route.params
+        this.props.navigation.setOptions({
+            title : `Payments : ${title}`
+        })
         const billData = await fetchPayments(billName)
         console.log("XXXXXXX", billData)
         this.setState({ billData: billData, dataLoaded: true })
@@ -21,11 +24,7 @@ class BillReportMonthly extends React.Component {
 
 
     render() {
-        const { billName, title } = this.props.route.params
-
-        this.props.navigation.setOptions({
-            title : `Payments : ${title}`
-        })
+        const { billName } = this.props.route.params
 
         const setBillData = (billDataNew) => {
             this.setState({ billData: billDataNew, dataLoaded: true })
